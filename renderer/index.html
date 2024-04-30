@@ -1,25 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- head-->
   <head>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'"/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/renderer.js" defer></script>
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap">
+    <link rel="stylesheet" href="css/style2.css">
+    <script src="js/renderer.js" defer></script>
+    
     <title>Wavio</title>
+  
   </head>
-  <body class="bg-teal-700">
-    <div class="max-w-xl m-auto h-screen flex flex-col align-center justify-center">
-      <div class="flex flex-col w-full items-center justify-center bg-grey-lighter">
-        <button type="button" id="btn">Request</button>
-        <button type="button" id="btn2">Select sample folder</button>
-        <button type="button" id="btn3">Select destination folder</button>
-        <button type="button" id="btn4">Tester</button>
-        Samples folder: <strong id="filePath"></strong>
-        Destination folder: <strong id="destPath"></strong>
-        <ul id="list"></ul>    
+  
+  <!-- body -->
+  <body>
+
+    <!-- main div -->
+    <div class="content">
+      <h1>Wavize</h1>
+
+      <div class="container">  
+        <!-- folder selection-->
+        <div id="folderSelection">
+          <br><br><br><br><br><br><br><br>
+          <button type="button" id="btn2" class="pill-button">Select Sample Folder</button>
+          <label id="sampleFolderText">No selected sample folder</label>
+          
+          <br>
+          <br>
+
+          <button type="button" id="btn3" class="pill-button">Select Destination Folder</button>
+          <label id="destinationFolderText">No selected destination folder</label>
+
+          <br>
+          <br>
+
+        </div>
+
+        <!-- completion screen -->
+        <div id="afterLoading" style="display: none;">
+          <br><br><br><br>
+          <h2>Sorted Samples</h2>  
+          <div class="scrollable" id="selectedFoldersList"></div>
+          <br>
+          <button type="button" id="btn6" class="pill-button">Open folder</button>
+        </div>
       </div>
+
+      <!-- loading animation -->
+      <div id="loading" class="loading"></div>
+      <button type="button" id="btn4" class="pill-button submit-button">Submit</button>
+      <button type="button" id="btn5" class="pill-button return-button">Return</button>
     </div>
+
   </body>
 </html>
