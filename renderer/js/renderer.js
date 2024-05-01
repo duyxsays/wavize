@@ -11,8 +11,8 @@ const btn = document.getElementById('btn');
 const btn2 = document.getElementById('btn2');
 const btn3 = document.getElementById('btn3');
 const btn4 = document.getElementById('btn4');
-const btn5 = document.getElementById('btn5')
-const btn6 = document.getElementById('btn6')
+const btn5 = document.getElementById('btn5');
+const btn6 = document.getElementById('btn6');
 
 var sampleFolderLabel = document.getElementById("sampleFolderText");
 var destinationFolderLabel = document.getElementById("destinationFolderText");
@@ -20,6 +20,7 @@ var folderSelection = document.getElementById("folderSelection");
 var loading = document.getElementById("loading");
 var selectedFoldersList = document.getElementById("selectedFoldersList");
 var afterLoading = document.getElementById("afterLoading");
+var loadingLabel = document.getElementById("loadingLabel");
 
 function isFileAudio(file) {
   const acceptedAudioTypes = ['audio/wav', 'audio/mp3'];
@@ -142,12 +143,13 @@ btn4.addEventListener('click', async () => {
   folderSelection.style.display = "none";
   btn4.style.display = "none";
   loading.style.display = "block";
+  loadingLabel.style.display = "block";
 
-  
   setTimeout(function() {
     loading.style.display = "none";
     afterLoading.style.display = "block";
     btn5.style.display = "block";
+    loadingLabel.style.display = "none";
     showSelectedFolders();
   }, 3000); // Adjust the time as needed
 });
