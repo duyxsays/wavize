@@ -17,10 +17,9 @@ const btn6 = document.getElementById('btn6');
 var sampleFolderLabel = document.getElementById("sampleFolderText");
 var destinationFolderLabel = document.getElementById("destinationFolderText");
 var folderSelection = document.getElementById("folderSelection");
-var loading = document.getElementById("loading");
 var selectedFoldersList = document.getElementById("selectedFoldersList");
 var afterLoading = document.getElementById("afterLoading");
-var loadingLabel = document.getElementById("loadingLabel");
+var loadingContainer = document.getElementById("loadingDiv");
 
 function isFileAudio(file) {
   const acceptedAudioTypes = ['audio/wav', 'audio/mp3'];
@@ -137,22 +136,26 @@ btn3.addEventListener('click', async () => {
   }
 });
 
-btn4.addEventListener('click', async () => {
-  // ipcRenderer.send('test:script', {});
-  
+btn4.addEventListener('click', async () => {  
   folderSelection.style.display = "none";
   btn4.style.display = "none";
-  loading.style.display = "block";
-  loadingLabel.style.display = "block";
+  loadingContainer.style.display = "block";
 
-  setTimeout(function() {
-    loading.style.display = "none";
+  //ipcRenderer.send('test:script', {});
+  simulateLoading();
+  
+});
+
+function simulateLoading() 
+{
+  setTimeout(function()
+  {
+    loadingContainer.style.display = "none";
     afterLoading.style.display = "block";
     btn5.style.display = "block";
-    loadingLabel.style.display = "none";
     showSelectedFolders();
   }, 3000); // Adjust the time as needed
-});
+}
 
 btn5.addEventListener('click', async () => {
   afterLoading.style.display = "none";
@@ -167,10 +170,16 @@ btn6.addEventListener('click', async () => {
 
 function showSelectedFolders() 
 {
-  // Example data for selected folders (replace with actual data)
-
   ipcRenderer.send('fetch:samples', {});
 }
+
+ipcRenderer.on('responses:handled', (event, data) => {
+  afterLoading.style.display = "block";
+  loadingContainer.style.display = "none";
+  btn5.style.display = "block";
+
+  showSelectedFolders();
+});
 
 ipcRenderer.on('requested:samples', (event, data) => {
   // Handle the received data
@@ -187,6 +196,7 @@ ipcRenderer.on('requested:samples', (event, data) => {
     {
       console.log(data[i][j])
       var label = document.createElement("label");
+      label.style.color = "#E1D6C1"
       label.textContent = data[i][j];
       selectedFoldersList.appendChild(label);
       selectedFoldersList.appendChild(document.createElement("br"));

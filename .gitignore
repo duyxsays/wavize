@@ -55,4 +55,4 @@ patches/mtime-cache.json
 
 spec/fixtures/logo.png
 
-/js/config.js
+renderer/js/config.js

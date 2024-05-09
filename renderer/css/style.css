@@ -6,22 +6,17 @@ html
 body 
 {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to bottom, #BDD3C7, #FBFAFF);
+    background: #1B1B1A;
     background-repeat: no-repeat;
     background-attachment: fixed;
     margin: 0;
     padding: 0;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
-.content
-{
-    text-align: center;
-    align-items: center;
-}
 .container
 {
     margin-top: 50px;
@@ -29,27 +24,32 @@ body
 
 h1 
 {
-    color: #081D56; /* Change the color to your desired color code */
+    color: #E1D6C1; /* Change the color to your desired color code */
     margin-top: 50px;
 }
 
 h2 
 {
-    color: #081D56; /* Change the color to your desired color code */
+    color: #E1D6C1; /* Change the color to your desired color code */
 }
 
 h3 
 {
-    color: #081D56; /* Change the color to your desired color code */
+    color: #E1D6C1; /* Change the color to your desired color code */
+}
+
+.body-text
+{
+    color: #E1D6C1;
 }
 
 .pill-button 
 {
     font-family: 'Roboto', sans-serif;
     display: block; /* Changed from inline-block to block */
-    background-color: #3961EE;
-    color: #FBFAFF;
-    border: none;
+    background-color: #232422;
+    color: #E1D6C1;
+    border: 2px solid #3B3B38;
     padding: 10px 20px;
     border-radius: 20px;
     cursor: pointer;
@@ -61,7 +61,8 @@ h3
 .submit-button 
 {
     display: block;
-    background-color: #081D56;
+    background-color: #E1D6C1;
+    color: #1B1B1A;
     position: fixed; /* Fixed position */
     bottom: 50px; /* 20px from the bottom */
     left: 50%;
@@ -71,49 +72,103 @@ h3
 .return-button
 {
     display: none;
-    background-color: #081D56;
+    background-color: #E1D6C1;
+    color: #1B1B1A;
     position: fixed; /* Fixed position */
     bottom: 50px; /* 20px from the bottom */
     left: 50%;
     transform: translateX(-50%); /* Center horizontally */
 }
 
+.scrollableContainer {
+    display: flex;
+    justify-content: center; /* Center the .scrollable horizontally */
+}
+
 .scrollable 
 {
     width: 500px; /* Set width as needed */
     height: 200px; /* Set height as needed */
-    overflow-y: scroll; /* Enable scrollbars if content overflows */
+    overflow-y: auto; /* Enable scrollbars if content overflows */
     border: 1px solid #ccc; /* Optional: Add border for visual clarity */
     padding: 10px; /* Optional: Add padding for better appearance */
-    background-color: #FBFAFF;
+    background-color: #3B3B38;
 }
 
-.loading 
-{
+.loadingContainer {
     display: none;
-    border: 3px solid #f3f3f3; /* Light grey */
-    border-top: 3px solid #081D56; /* Blue */
-    border-radius: 50%;
-    width: 30px; /* Increase the width */
-    height: 30px; /* Increase the height */
-    animation: spin 2s linear infinite;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-@keyframes spin 
-{
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.center {
+    display: none;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.loadingLabel
+.wave 
 {
-    display: none;
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 40px;
+    background: #E1D6C1;
+    margin: 5px;
+    animation: wave 1s linear infinite;
+    border-radius: 20px;
+}
+.wave:nth-child(2) 
+{
+    animation-delay: 0.1s;
+}
+.wave:nth-child(3) 
+{
+    animation-delay: 0.2s;
+}
+.wave:nth-child(4) 
+{
+    animation-delay: 0.3s;
+}
+.wave:nth-child(5) 
+{
+    animation-delay: 0.4s;
+}
+.wave:nth-child(6) 
+{
+    animation-delay: 0.5s;
+}
+.wave:nth-child(7) 
+{
+    animation-delay: 0.6s;
+}
+.wave:nth-child(8) 
+{
+    animation-delay: 0.7s;
+}
+.wave:nth-child(9) 
+{
+    animation-delay: 0.8s;
+}
+.wave:nth-child(10) 
+{
+    animation-delay: 0.9s;
+}
+  
+@keyframes wave 
+{
+    0% 
+    {
+        transform: scale(0);
+    }
+    50% 
+    {
+        transform: scale(1);
+    }
+    100% 
+    {
+        transform: scale(0);
+    }
 }
