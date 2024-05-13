@@ -1,5 +1,3 @@
-const ws = require('wavesurfer.js');
-
 // New elements
 const btn2 = document.getElementById('btn2');
 const btn3 = document.getElementById('btn3');
@@ -54,13 +52,17 @@ function sendRequest() {
 }
 
 btn2.addEventListener('click', async () => {
+  ipcRenderer.send('inference:test', {
+
+  })
+/*
   const filePath = await window.ipcRenderer.request('dialog:openDirectory', 'samplesPath');
   console.log(filePath);
   
   if (filePath != null) 
   {
     sampleFolderLabel.textContent = filePath;
-  }
+  }*/
   
 });
 

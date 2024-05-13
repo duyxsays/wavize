@@ -5,15 +5,15 @@ const os = require('node:os')
 const Toastify = require('toastify-js')
 
 contextBridge.exposeInMainWorld('os', {
-    homedir: () => os.homedir(),
+  homedir: () => os.homedir(),
 });
 
 contextBridge.exposeInMainWorld('path', {
-    join: (...args) => path.join(...args),
+  join: (...args) => path.join(...args),
 });
 
 contextBridge.exposeInMainWorld('Toastify', {
-    toast: (options) => Toastify(options).showToast(),
+  toast: (options) => Toastify(options).showToast(),
 });
 
 contextBridge.exposeInMainWorld('ipcRenderer', {

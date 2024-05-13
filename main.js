@@ -1,8 +1,9 @@
 const { app, BrowserWindow, ipcMain, dialog, shell} = require('electron/main');
-const HF = require('@huggingface/inference');
+const HfInference = require('@huggingface/inference');
 const path = require('node:path');
-const os = require('node:os');
 const fs = require('node:fs');
+
+const config = require('./renderer/js/config');
 
 const isMac = process.platform === 'darwin';
 // const isDev = process.env.NODE_ENV !== 'production';
@@ -137,7 +138,7 @@ async function apiCall(filePath)
     const response = await fetch(
         'https://api-inference.huggingface.co/models/TheDuyx/distilhubert-bass-classifier9',
         {
-            headers: { Authorization: config.API_key },
+            headers: { Authorization: config.API_KEY },
             method: 'Post',
             body: fileData,
         }, 
@@ -269,6 +270,44 @@ function openDir()
 {
     shell.openPath(_destinationFolder);
 }
+
+ipcMain.on('inference:test', (e, options) => {
+    runMultipleRequests();
+});
+
+async function inferenceTest(filePath)
+{
+    const hf = new HfInference('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');
+    
+    try {
+      const result = await hf.audioClassification({
+        model: 'TheDuyx/distilhubert-bass9',
+        data: fs.readFileSync(filePath)
+      })
+
+      return result;
+
+    } catch(error) {
+      console.error('Error:', error);
+      throw error; // Rethrow the error if needed
+    }
+}
+
+async function runMultipleRequests() {
+    const files = [
+      '/Users/duyx/Code/Classify/data/train/version2.0/acid/acid_1.wav',
+      '/Users/duyx/Code/Classify/data/train/version2.0/acid/acid_2.wav'
+    ];
+  
+    const promises = files.map(filePath => inferenceTest(filePath));
+  
+    try {
+        const results = await Promise.all(promises);
+        console.log('All results:', results);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  }
 
 /* ------------ Redacted
 function tester() 
