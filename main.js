@@ -1,12 +1,17 @@
-const { app, BrowserWindow, ipcMain, dialog, shell} = require('electron/main');
-const HfInference = require('@huggingface/inference');
-const path = require('node:path');
-const fs = require('node:fs');
+// const { app, BrowserWindow, ipcMain, dialog, shell} = require('electron/main');
+// const HfInference = require('@huggingface/inference');
+// const path = require('node:path');
+// const fs = require('node:fs/promises');
+// const config = require('./renderer/js/config');
 
-const config = require('./renderer/js/config');
+import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron';
+import { HfInference } from '@huggingface/inference';
+import fs from 'fs';
+import path from 'path';
+import { API_KEY, HF_KEY } from './renderer/js/config.js';
 
 const isMac = process.platform === 'darwin';
-// const isDev = process.env.NODE_ENV !== 'production';
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 let _sampleFolder = '';
 let _destinationFolder = '/Users/duyx/Code/electron-app/samples/';
@@ -16,13 +21,13 @@ let win;
 
 const createWindow = () => {
     win = new BrowserWindow({
-    width: 1000,
-    height: 800,
-    webPreferences: {
-        contextIsolation: true,
-        nodeIntegration: true,
-        preload: path.join(__dirname, 'preload.js')
-    }
+        width: 1000,
+        height: 800,
+        webPreferences: {
+            contextIsolation: true,
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.cjs')
+        }
   });
 
   // Open devtools if in dev env
@@ -49,8 +54,8 @@ app.whenReady().then(() => {
     });
 })
 
-ipcMain.handle('dialog:openDirectory', (e, message) => {
-    return await = handleFileOpen(message)
+ipcMain.handle('dialog:openDirectory', async (e, message) => {
+    return await handleFileOpen(message)
 });
 
 async function handleFileOpen (message) 
@@ -138,7 +143,7 @@ async function apiCall(filePath)
     const response = await fetch(
         'https://api-inference.huggingface.co/models/TheDuyx/distilhubert-bass-classifier9',
         {
-            headers: { Authorization: config.API_KEY },
+            headers: { Authorization: API_KEY },
             method: 'Post',
             body: fileData,
         }, 
