@@ -52,23 +52,18 @@ function sendRequest() {
 }
 
 btn2.addEventListener('click', async () => {
-  ipcRenderer.send('inference:test', {
-
-  })
-/*
   const filePath = await window.ipcRenderer.request('dialog:openDirectory', 'samplesPath');
   console.log(filePath);
   
   if (filePath != null) 
   {
     sampleFolderLabel.textContent = filePath;
-  }*/
-  
+  }
 });
 
 btn3.addEventListener('click', async () => {
   const filePath = await window.ipcRenderer.request('dialog:openDirectory', "");
-  //destPathElement.innerHTML = filePath;
+  
   if (filePath != null)
   {
     destinationFolderLabel.textContent = filePath;
@@ -80,7 +75,9 @@ btn4.addEventListener('click', async () => {
   btn4.style.display = "none";
   loadingContainer.style.display = "block";
 
-  //ipcRenderer.send('test:script', {});
+  // ipcRenderer.send('test:script', {});
+  ipcRenderer.send('fake:loading', {});
+  
   simulateLoading();
   
 });
@@ -93,7 +90,7 @@ function simulateLoading()
     afterLoading.style.display = "block";
     btn5.style.display = "block";
     showSelectedFolders();
-  }, 3000); 
+  }, 4000); 
 }
 
 btn5.addEventListener('click', async () => {

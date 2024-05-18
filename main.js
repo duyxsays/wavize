@@ -1,15 +1,14 @@
 const { app, BrowserWindow, ipcMain, dialog, shell} = require('electron/main');
-const HfInference = require('@huggingface/inference');
 const path = require('node:path');
 const fs = require('node:fs');
-
-const config = require('./renderer/js/config');
+const config = require('./renderer/js/config.js');
 
 const isMac = process.platform === 'darwin';
 // const isDev = process.env.NODE_ENV !== 'production';
 
 let _sampleFolder = '';
-let _destinationFolder = '/Users/duyx/Code/electron-app/samples/';
+let _destinationFolder = '';
+let _sourceFolder = '/Users/duyx/Code/electron-app/samples';
 let _files = [];
 
 let win;
@@ -76,8 +75,11 @@ async function handleFileOpen (message)
 }
 
 ipcMain.on('test:script', (e, options) => {
-    // tester();
     tester2();
+});
+
+ipcMain.on('fake:loading', (e, options) => {
+    copyDirectory(_sourceFolder, _destinationFolder)
 });
 
 ipcMain.on('fetch:samples', (e, options) => {
@@ -142,7 +144,6 @@ async function apiCall(filePath)
             method: 'Post',
             body: fileData,
         }, 
-        
     );
     
     const result = await response.json();
@@ -271,43 +272,21 @@ function openDir()
     shell.openPath(_destinationFolder);
 }
 
-ipcMain.on('inference:test', (e, options) => {
-    runMultipleRequests();
-});
-
-async function inferenceTest(filePath)
+function copyDirectory(src, dest)
 {
-    const hf = new HfInference('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');
-    
-    try {
-      const result = await hf.audioClassification({
-        model: 'TheDuyx/distilhubert-bass9',
-        data: fs.readFileSync(filePath)
-      })
+    fs.mkdirSync(dest, { recursive: true });
 
-      return result;
+    fs.readdirSync(src, { withFileTypes: true}).forEach((entry) => {
+        const srcPath = path.join(src, entry.name);
+        const destPath = path.join(dest, entry.name);
 
-    } catch(error) {
-      console.error('Error:', error);
-      throw error; // Rethrow the error if needed
-    }
+        if (entry.isDirectory()) {
+            copyDirectory(srcPath, destPath);
+        } else {
+            fs.copyFileSync(srcPath, destPath);
+        }
+    });
 }
-
-async function runMultipleRequests() {
-    const files = [
-      '/Users/duyx/Code/Classify/data/train/version2.0/acid/acid_1.wav',
-      '/Users/duyx/Code/Classify/data/train/version2.0/acid/acid_2.wav'
-    ];
-  
-    const promises = files.map(filePath => inferenceTest(filePath));
-  
-    try {
-        const results = await Promise.all(promises);
-        console.log('All results:', results);
-    } catch (error) {
-        console.error('Error:', error);
-    }
-  }
 
 /* ------------ Redacted
 function tester() 
