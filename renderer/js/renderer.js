@@ -52,18 +52,12 @@ function sendRequest() {
 }
 
 btn2.addEventListener('click', async () => {
-  ipcRenderer.send('inference:test', {
-
-  })
-/*
   const filePath = await window.ipcRenderer.request('dialog:openDirectory', 'samplesPath');
   console.log(filePath);
-  
   if (filePath != null) 
   {
     sampleFolderLabel.textContent = filePath;
-  }*/
-  
+  }
 });
 
 btn3.addEventListener('click', async () => {
@@ -79,10 +73,9 @@ btn4.addEventListener('click', async () => {
   folderSelection.style.display = "none";
   btn4.style.display = "none";
   loadingContainer.style.display = "block";
-
-  //ipcRenderer.send('test:script', {});
-  simulateLoading();
   
+  ipcRenderer.send('test:script', {});
+  // simulateLoading();
 });
 
 function simulateLoading() 
