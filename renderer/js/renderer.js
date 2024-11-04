@@ -74,8 +74,8 @@ btn4.addEventListener('click', async () => {
   btn4.style.display = "none";
   loadingContainer.style.display = "block";
   
-  ipcRenderer.send('test:script', {});
-  // simulateLoading();
+  // ipcRenderer.send('test:script', {});
+  simulateLoading();
 });
 
 function simulateLoading() 
@@ -86,7 +86,7 @@ function simulateLoading()
     afterLoading.style.display = "block";
     btn5.style.display = "block";
     showSelectedFolders();
-  }, 3000); 
+  }, 5000); 
 }
 
 btn5.addEventListener('click', async () => {
